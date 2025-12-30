@@ -1,42 +1,38 @@
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-const params = new URLSearchParams(window.location.search);
-const mode = params.get("mode");
+// получаем user_id из Telegram initData (Telegram шлёт его)
+const userId = tg.initDataUnsafe.user.id;
 
-const title = document.getElementById("title");
-const addBlock = document.getElementById("add-block");
-const sellBlock = document.getElementById("sell-block");
+async function loadItems() {
+    const select = document.getElementById("item");
+    try {
+        const res = await fetch(`http://127.0.0.1:8000/items/${userId}`);
+        const items = await res.json();
 
-if (mode === "sell") {
-    title.innerText = "💰 Продажа товара";
-    addBlock.style.display = "none";
-    sellBlock.style.display = "block";
-    loadItems();
-} else {
-    title.innerText = "➕ Добавление товара";
-}
+        select.innerHTML = "";
+        if (items.length === 0) {
+            select.innerHTML = `<option value="">Нет товаров</option>`;
+            return;
+        }
 
-function addItem() {
-    const name = document.getElementById("name").value;
-    const buyPrice = parseFloat(document.getElementById("buy_price").value);
-
-    if (!name || !buyPrice) {
-        alert("Заполни все поля");
-        return;
+        items.forEach(item => {
+            const opt = document.createElement("option");
+            opt.value = item.id;
+            opt.text = `${item.name} (Цена покупки: ${item.buy_price})`;
+            select.appendChild(opt);
+        });
+    } catch (err) {
+        console.error(err);
+        select.innerHTML = `<option value="">Ошибка загрузки товаров</option>`;
     }
-
-    tg.sendData(JSON.stringify({
-        type: "add",
-        name: name,
-        buy_price: buyPrice
-    }));
-
-    tg.close();
 }
 
-function sellItem() {
-    const itemId = document.getElementById("items").value;
+// загружаем товары сразу при открытии
+loadItems();
+
+function sell() {
+    const itemId = document.getElementById("item").value;
     const sellPrice = parseFloat(document.getElementById("sell_price").value);
 
     if (!itemId || !sellPrice) {
@@ -53,11 +49,3 @@ function sellItem() {
     tg.close();
 }
 
-/* ⚠️ ВАЖНО
-   Здесь заглушка.
-   В следующем шаге я подключу реальный список товаров из БД через API
-*/
-function loadItems() {
-    const select = document.getElementById("items");
-    select.innerHTML = `<option value="1">Товар #1</option>`;
-}
