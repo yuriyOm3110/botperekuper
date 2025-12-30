@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Перекупер</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #0f0f0f;
+    color: #fff;
+    padding: 20px;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+}
+
+input, select {
+    background: #1c1c1c;
+    color: #fff;
+}
+
+button {
+    background: #2ea6ff;
+    color: #000;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<h2 id="title"></h2>
+
+<div id="add-block">
+    <input id="name" placeholder="Название товара">
+    <input id="buy_price" type="number" placeholder="Цена покупки">
+    <button onclick="addItem()">💾 Сохранить</button>
+</div>
+
+<div id="sell-block" style="display:none">
+    <select id="items"></select>
+    <input id="sell_price" type="number" placeholder="Цена продажи">
+    <button onclick="sellItem()">💰 Продать</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
