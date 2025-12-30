@@ -4,53 +4,26 @@
 <meta charset="UTF-8">
 <title>Продажа товара</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #0f0f0f;
-    color: #fff;
-    padding: 20px;
-}
-
-select, input, button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 12px;
-    border-radius: 8px;
-    border: none;
-    font-size: 16px;
-}
-
-select, input {
-    background: #1c1c1c;
-    color: #fff;
-}
-
-button {
-    background: #28ff7a;
-    color: #000;
-    font-weight: bold;
-}
+body { font-family: Arial; background:#0f0f0f; color:#fff; padding:20px; }
+select, input, button { width:100%; padding:12px; margin-top:12px; border-radius:8px; border:none; font-size:16px; }
+select, input { background:#1c1c1c; color:#fff; }
+button { background:#28ff7a; color:#000; font-weight:bold; cursor:pointer; z-index:10; }
 </style>
 </head>
-
 <body>
 
 <h2>💰 Продажа товара</h2>
 
 <select id="item">
-    <option value="">Выбери товар</option>
-    <!-- пока заглушка -->
-    <option value="1">Товар #1</option>
+    <option value="">Загрузка...</option>
 </select>
 
 <input id="sell_price" type="number" placeholder="Цена продажи">
-
-<button onclick="sell()">Продать</button>
+<button id="sellBtn">Продать</button>
 
 <script src="sell.js"></script>
 </body>
 </html>
+
